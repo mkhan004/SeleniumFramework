@@ -4,8 +4,8 @@ import org.testng.annotations.BeforeSuite;
 
 public class TestBase extends Driver {
 	
-	String browserType = "firefox";
-	String appUrl = "http://qa.elitecareer.net";
+	String browserType = getProperty("browser");
+	String appUrl = getProperty("appUrl");
 	
 	@BeforeSuite
 	public void setUp() {
