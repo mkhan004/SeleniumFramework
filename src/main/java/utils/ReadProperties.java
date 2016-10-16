@@ -5,8 +5,14 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 public class ReadProperties {
+	
+	public static void main(String[] args) {
 		
-	public String getProperty(String key) {
+		System.out.println(getProperty("appUrl"));
+		
+	}
+		
+	public static String getProperty(String key) {
 		String value = null;
 		
 		Properties prop = loadProperties("testRun.properties");
@@ -28,7 +34,7 @@ public class ReadProperties {
 	}
 
 	// load entire content of properties file
-	private Properties loadProperties( String propertyFileName ) {
+	private static Properties loadProperties( String propertyFileName ) {
 		Properties property = null;
 		
 		try {
@@ -38,7 +44,7 @@ public class ReadProperties {
 			prop.load(fileStream);
 			property = prop;
 		} catch (Exception e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 		return property;
 	}

@@ -1,7 +1,10 @@
 package base;
 
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Listeners;
 
+@Listeners(listener.EliteListener.class)
 public class TestBase extends Driver {
 	
 	String browserType = getProperty("browser");
@@ -15,6 +18,11 @@ public class TestBase extends Driver {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@AfterSuite
+	public void tearDown() {
+		driver.quit();
 	}
 
 }

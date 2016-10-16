@@ -28,7 +28,7 @@ public class Driver extends ReadProperties {
 		driver.manage().window().maximize();
 	}
 	
-	public WebDriver getDriver() {
+	public static WebDriver getDriver() {
 		return driver;
 	}
 	
