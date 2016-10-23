@@ -47,7 +47,7 @@ public class EliteListener  implements ITestListener {
 	 * </dependency>
 	 */
 	
-	WebDriver driver = TestBase.getDriver();
+	WebDriver driver;
 	private static String environment = TestBase.getProperty("testEnv");
 	
 	/**
@@ -164,7 +164,7 @@ public class EliteListener  implements ITestListener {
 		String testMethodName = result.getName().toString().trim();
 		String screenShotName = testMethodName + ".png";
 
-//		driver = TestBase.getDriver();
+		driver = TestBase.getDriver();
 		if (driver != null) {
 			String imagePath = ".." + fileSeperator + reportDir 
 					+ "Screenshots" + fileSeperator + testClassName

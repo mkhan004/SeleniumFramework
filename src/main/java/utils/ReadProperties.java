@@ -5,12 +5,6 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 public class ReadProperties {
-	
-	public static void main(String[] args) {
-		
-		System.out.println(getProperty("appUrl"));
-		
-	}
 		
 	public static String getProperty(String key) {
 		String value = null;

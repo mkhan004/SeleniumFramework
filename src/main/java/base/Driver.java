@@ -1,5 +1,7 @@
 package base;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -26,6 +28,7 @@ public class Driver extends ReadProperties {
 	
 	private void setDriverProperty() {
 		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 	
 	public static WebDriver getDriver() {
