@@ -21,7 +21,8 @@ public class TestBase extends Driver {
 	@BeforeSuite
 	public void setUp() {
 		try {
-			
+			System.out.println("AppURL: " + appUrl);
+			System.out.println("browserType: " + browserType);
 			setDriver(browserType, appUrl);
 		} catch (Exception e) {
 			e.printStackTrace();

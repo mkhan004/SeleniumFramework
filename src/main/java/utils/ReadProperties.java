@@ -12,16 +12,34 @@ public class ReadProperties {
 		Properties prop = loadProperties("testRun.properties");
 		value = prop.getProperty(key);
 		
-		if( value == null ) {
-			String testEnv = prop.getProperty("testEnv");
-			prop = loadProperties(testEnv + ".properties");
-			if(prop == null) {
-				prop = loadProperties("qa.properties");
+		System.out.println(prop.getProperty("browser"));
+		if(value == null) {
+			if(prop.getProperty("browser").equalsIgnoreCase("saucelabs")) {
+				String testEnv = prop.getProperty("testEnv");
+				if (!key.contains("saucelabs")) {
+				prop = loadProperties(testEnv + ".properties");
+				} else {
+					prop = loadProperties("saucelabs.properties");
+				}
+				
+				if(prop != null) {
+					value = prop.getProperty(key);
+				}
+				
+			} else {
+				if( value == null ) {
+					String testEnv = prop.getProperty("testEnv");
+					prop = loadProperties(testEnv + ".properties");
+					if(prop == null) {
+						prop = loadProperties("qa.properties");
+					}
+					
+					if(prop != null) {
+						value = prop.getProperty(key);
+					}
+				}
 			}
-			
-			if(prop != null) {
-				value = prop.getProperty(key);
-			}
+		
 		}
 		
 		return value;
