@@ -23,7 +23,7 @@ public class TestSignInPage extends TestBase {
 		menuBar.logoutLink.click();
 		menuBar.signInLink.click();
 		
-		Assert.assertTrue(url.contains("/profile.php"));
+		Assert.assertTrue(url.contains("/profiles.php"));
 	}
 	
 	@Test

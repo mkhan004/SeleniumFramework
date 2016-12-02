@@ -251,12 +251,22 @@ public class EliteListener  implements ITestListener {
 		
 		Paragraph p = new Paragraph(context.getName() + " Result (" + environment + ")",
 				FontFactory.getFont(FontFactory.HELVETICA, 20, Font.BOLD, new Color(0, 0, 255)));
-		/*Paragraph p2 = new Paragraph("By: Shakil Khan",
-				FontFactory.getFont(FontFactory.HELVETICA, 12, Font.ITALIC, new Color(0, 0, 0)));*/
+		
+		String logs = "";
+		if (TestBase.getProperty("saucelabs") != null && Boolean.valueOf(TestBase.getProperty("saucelabs"))) {
+			logs = "\nBrowser: " + TestBase.getSauceLabsProperty("browser") + "\n"
+					+ "Browser Version: " + TestBase.getSauceLabsProperty("browserVersion") + "\n"
+					+ "Operating System: " + TestBase.getSauceLabsProperty("opratingSystem");
+					
+		} else {
+			logs = "Browser: " + TestBase.getProperty("browser");
+		}
+		Paragraph p2 = new Paragraph(logs,
+				FontFactory.getFont(FontFactory.HELVETICA, 12, Font.ITALIC, new Color(0, 0, 0)));
 		
 		try {
 			this.document.add(p);
-			//this.document.add(p2);
+			this.document.add(p2);
 			this.document.add(new Paragraph(new Date().toString()));
 		} catch (DocumentException e1) {
 			e1.printStackTrace();

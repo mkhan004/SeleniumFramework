@@ -16,24 +16,17 @@ import utils.ReadProperties;
 public class Driver extends ReadProperties {
 	public static WebDriver driver;
 	static DesiredCapabilities caps;
-	public static final String USERNAME = getProperty("saucelabsUSERNAME");
-	public static final String ACCESS_KEY = getProperty("saucelabsACCESS_KEY");
+	public static final String USERNAME = getSauceLabsProperty("USERNAME");
+	public static final String ACCESS_KEY = getSauceLabsProperty("ACCESS_KEY");
 	public static final String URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
-
-//	public static void main(String[] args) {
-//		initSauceLabs();
-//	}
 	
 	public void setDriver(String browserType, String appUrl) {
-		
 		if( browserType.equalsIgnoreCase("firefox") ) {
 			initFirefox();
 		} else if( browserType.equalsIgnoreCase("chrome") ) {
 			initChrome();
 		} else if( browserType.equalsIgnoreCase("safari") ) {
 			initSafari();
-		} else if( browserType.equalsIgnoreCase("saucelabs") ) {
-			initSauceLabs();
 		} else {
 			initFirefox();
 		}
@@ -64,32 +57,38 @@ public class Driver extends ReadProperties {
 		driver = new SafariDriver();
 	}
 	
-	private void initSauceLabs() {
-		String browserType = getProperty("saucelabsBrowser");
-		String browserVersion = getProperty("saucelabsBrowserVersion");
-		String operatingSystem = getProperty("saucelabsOpratingSystem");
-		
-		System.out.println("browserType: " + browserType);
-		System.out.println("browserVersion: " + browserVersion);
-		System.out.println("operatingSystem: " + operatingSystem);
-		System.out.println("URL: " + URL);
-		System.out.println("appUrl: " + getProperty("appUrl"));
-		
+	private void setDriverProperty() {
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	}
+	
+	public static WebDriver getDriver() {
+		return driver;
+	}
+	
+	public void setSauceLabs(String appUrl) {
+		String browserType = getSauceLabsProperty("browser");
+		String browserVersion = getSauceLabsProperty("browserVersion");
+		String operatingSystem = getSauceLabsProperty("opratingSystem");
+				
 		try {
-			caps = getDesiredCapabilities(browserType, browserVersion, operatingSystem);
+			caps = setDesiredCapabilities(browserType, browserVersion, operatingSystem);
 			driver = new RemoteWebDriver(new URL(URL), caps);
+			driver.get(appUrl);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private DesiredCapabilities getDesiredCapabilities(String browserType, String browserVersion, String operatingSystem) {
+	private DesiredCapabilities setDesiredCapabilities(String browserType, String browserVersion, String operatingSystem) {
 		if (browserType.equalsIgnoreCase("firefox")) {
 			caps = DesiredCapabilities.firefox();
 		} else if (browserType.equalsIgnoreCase("chrome")) {
 			caps = DesiredCapabilities.chrome();
 		} else if (browserType.equalsIgnoreCase("safari")) {
 			caps = DesiredCapabilities.safari();
+		} else if (browserType.equalsIgnoreCase("IE")) {
+			caps = DesiredCapabilities.internetExplorer();
 		} else {
 			caps = DesiredCapabilities.firefox();
 		}
@@ -100,13 +99,5 @@ public class Driver extends ReadProperties {
 		return caps;
 	}
 	
-	private void setDriverProperty() {
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	}
-	
-	public static WebDriver getDriver() {
-		return driver;
-	}
 	
 }
